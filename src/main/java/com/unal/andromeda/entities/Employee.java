@@ -1,18 +1,19 @@
 package com.unal.andromeda.entities;
 
 public class Employee {
-    private Long id;
+    private Integer id;
     private String cedula;
     private String name;
     private String apellido;
+    private String role;
     private String enterprise;
     private String profile;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -38,6 +39,14 @@ public class Employee {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getEnterprise() {
