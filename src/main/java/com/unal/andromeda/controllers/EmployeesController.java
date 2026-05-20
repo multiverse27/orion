@@ -24,16 +24,16 @@ public class EmployeesController {
     @RequestMapping(value="/employees/{id}")
     public Employee getEmployees(@PathVariable Integer id) {
         Employee employee = new Employee();
-        employee.setId(1);
-        employee.setName("Enrique");
-        employee.setApellido("Vergara");
+        employee.setId(id);
+        employee.setName("Sebas");
+        employee.setApellido("Muñoz");
         employee.setRole("Developer");
         employee.setEnterprise("Londoño Gómez");
         employee.setProfile("kiikechavez");
         return employee;
     }
 
-    @RequestMapping(value="/employees")
+    @RequestMapping(value="/employees/modify")
     public Employee modifyEmployees() {
         Employee employee = new Employee();
         employee.setId(1);
@@ -45,7 +45,7 @@ public class EmployeesController {
         return employee;
     }
 
-    @RequestMapping(value="/employees")
+    @RequestMapping(value="/employees/delete")
     public Employee deleteEmployees() {
         Employee employee = new Employee();
         employee.setId(1);
@@ -57,7 +57,7 @@ public class EmployeesController {
         return employee;
     }
 
-    @RequestMapping(value="/employees")
+    @RequestMapping(value="/employees/serach")
     public Employee searchEmployees() {
         Employee employee = new Employee();
         employee.setId(1);
