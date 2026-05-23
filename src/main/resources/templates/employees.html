@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .actions a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .actions button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        .actions button:hover {
+            background-color: #c82333;
+        }
+        .add-employee-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .add-employee-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .add-employee-form input[type="text"],
+        .add-employee-form select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .add-employee-form button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .add-employee-form button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee List</h1>
+
+    <div class="add-employee-form">
+        <h2>Add New Employee</h2>
+        <form th:action="@{/employees.html/new}" th:object="${newEmployee}" method="post">
+            <label for="cedula">Cedula:</label>
+            <input type="text" id="cedula" th:field="*{cedula}" required>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="*{name}" required>
+
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" th:field="*{apellido}" required>
+
+            <label for="role">Role:</label>
+            <select id="role" th:field="*{role.id}">
+                <option value="">-- Select Role --</option>
+                <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+            </select>
+
+            <label for="enterprise">Enterprise:</label>
+            <select id="enterprise" th:field="*{enterprise.id}">
+                <option value="">-- Select Enterprise --</option>
+                <option th:each="enterprise : ${enterprises}" th:value="${enterprise.id}" th:text="${enterprise.name}"></option>
+            </select>
+
+            <label for="profile">Profile:</label>
+            <select id="profile" th:field="*{profile.id}">
+                <option value="">-- Select Profile --</option>
+                <option th:each="profile : ${profiles}" th:value="${profile.id}" th:text="${profile.name}"></option>
+            </select>
+
+            <button type="submit">Add Employee</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cedula</th>
+                <th>Name</th>
+                <th>Apellido</th>
+                <th>Role</th>
+                <th>Enterprise</th>
+                <th>Profile</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="employee : ${employees}">
+                <td th:text="${employee.id}"></td>
+                <td th:text="${employee.cedula}"></td>
+                <td th:text="${employee.name}"></td>
+                <td th:text="${employee.apellido}"></td>
+                <td th:text="${employee.role != null ? employee.role.name : 'N/A'}"></td>
+                <td th:text="${employee.enterprise != null ? employee.enterprise.name : 'N/A'}"></td>
+                <td th:text="${employee.profile != null ? employee.profile.name : 'N/A'}"></td>
+                <td class="actions">
+                    <a th:href="@{/employees.html/edit/{id}(id=${employee.id})}">Edit</a>
+                    <form th:action="@{/employees.html/delete/{id}(id=${employee.id})}" method="post" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

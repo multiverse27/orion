@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Employee</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        .employee-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .employee-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .employee-form input[type="text"],
+        .employee-form select { /* Added select to styling */
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .employee-form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-right: 10px;
+        }
+        .employee-form button:hover {
+            background-color: #0056b3;
+        }
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit Employee</h1>
+
+    <div class="employee-form">
+        <form th:action="@{/employees.html/edit/{id}(id=${employee.id})}" th:object="${employee}" method="post">
+            <input type="hidden" th:field="*{id}">
+
+            <label for="cedula">Cedula:</label>
+            <input type="text" id="cedula" th:field="*{cedula}" required>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="*{name}" required>
+
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" th:field="*{apellido}" required>
+
+            <label for="role">Role:</label>
+            <select id="role" th:field="*{role.id}">
+                <option value="">-- Select Role --</option>
+                <option th:each="role : ${roles}"
+                        th:value="${role.id}"
+                        th:text="${role.code}"
+                        th:selected="${employee.role != null and employee.role.id == role.id}">
+                </option>
+            </select>
+
+            <label for="enterprise">Enterprise:</label>
+            <select id="enterprise" th:field="*{enterprise.id}">
+                <option value="">-- Select Enterprise --</option>
+                <option th:each="enterprise : ${enterprises}"
+                        th:value="${enterprise.id}"
+                        th:text="${enterprise.code}"
+                        th:selected="${employee.enterprise != null and employee.enterprise.id == enterprise.id}">
+                </option>
+            </select>
+
+            <label for="profile">Profile:</label>
+            <select id="profile" th:field="*{profile.id}">
+                <option value="">-- Select Profile --</option>
+                <option th:each="profile : ${profiles}"
+                        th:value="${profile.id}"
+                        th:text="${profile.code}"
+                        th:selected="${employee.profile != null and employee.profile.id == profile.id}">
+                </option>
+            </select>
+
+            <button type="submit">Update Employee</button>
+            <a th:href="@{/employees.html}" class="button">Cancel</a>
+        </form>
+    </div>
+
+    <a th:href="@{/employees.html}" class="back-link">Back to Employee List</a>
+</body>
+</html>

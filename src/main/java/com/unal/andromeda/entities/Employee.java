@@ -1,67 +1,38 @@
 package com.unal.andromeda.entities;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "employees")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(nullable = false, unique = true)
     private String cedula;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String apellido;
-    private String role;
-    private String enterprise;
-    private String profile;
 
-    public Integer getId() {
-        return id;
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_role", referencedColumnName = "id", nullable = true)
+    private Role role;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_enterprise", referencedColumnName = "id", nullable = true)
+    private Enterprise enterprise;
 
-    public String getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getEnterprise() {
-        return enterprise;
-    }
-
-    public void setEnterprise(String enterprise) {
-        this.enterprise = enterprise;
-    }
-
-    public String getProfile() {
-        return profile;
-    }
-
-    public void setProfile(String profile) {
-        this.profile = profile;
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_profile", referencedColumnName = "id", nullable = true)
+    private Profile profile;
 }
